@@ -48,6 +48,7 @@ class CategoriesController extends AppController
     public function add()
     {
         $category = $this->Categories->newEntity();
+
         if ($this->request->is('post')) {
             $category = $this->Categories->patchEntity($category, $this->request->getData());
             if ($this->Categories->save($category)) {
@@ -94,6 +95,7 @@ class CategoriesController extends AppController
     public function delete($id = null)
     {
         $this->request->allowMethod(['post', 'delete']);
+
         $category = $this->Categories->get($id);
         if ($this->Categories->delete($category)) {
             $this->Flash->success(__('The category has been deleted.'));
