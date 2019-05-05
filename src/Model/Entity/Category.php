@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -23,7 +24,7 @@ class Category extends Entity
      * @var array
      */
     protected $_accessible = [
-        'name' => true,
-        'meals' => true
+        '*' => true,
+        'id' => false
     ];
 }
