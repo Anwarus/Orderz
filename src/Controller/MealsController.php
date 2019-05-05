@@ -43,7 +43,7 @@ class MealsController extends AppController
             'contain' => ['MealTypes']
         ]);
 
-        $this->set('meal', $meal);
+        $this->set(compact('meal'));
     }
 
     /**

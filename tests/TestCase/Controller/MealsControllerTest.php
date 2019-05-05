@@ -6,20 +6,52 @@ use Cake\ORM\TableRegistry;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
 
+/**
+ * App\Controller\MealsController Test Case
+ */
 class MealsControllerTest extends TestCase
 {
     use IntegrationTestTrait;
 
+    /**
+     * Fixtures
+     *
+     * @var array
+     */
     public $fixtures = ['app.Meals'];
 
-    public function testMealIndex()
+    /**
+     * Test index method
+     *
+     * @return void
+     */
+    public function testIndex()
     {
         $this->get('/meals');
 
         $this->assertResponseOk();
     }
 
-    public function testMealAdd()
+    /**
+     * Test view method
+     *
+     * @return void
+     */
+    public  function testView()
+    {
+        $id = 1;
+
+        $this->get("/meals/view/{$id}");
+
+        $this->assertResponseOk();
+    }
+
+    /**
+     * Test add method
+     *
+     * @return void
+     */
+    public function testAdd()
     {
         $this->enableCsrfToken();
 
@@ -39,7 +71,12 @@ class MealsControllerTest extends TestCase
         $this->assertEquals(1, $query->count());
     }
 
-    public function testMealEdit()
+    /**
+     * Test edit method
+     *
+     * @return void
+     */
+    public function testEdit()
     {
         $this->enableCsrfToken();
 
@@ -56,7 +93,12 @@ class MealsControllerTest extends TestCase
         $this->assertEquals($data['name'], $meal->name);
     }
 
-    public function testMealDelete()
+    /**
+     * Test delete method
+     *
+     * @return void
+     */
+    public function testDelete()
     {
         $this->enableCsrfToken();
 
