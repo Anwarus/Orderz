@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Model\Entity;
 
 use Cake\ORM\Entity;
@@ -8,9 +7,12 @@ use Cake\ORM\Entity;
  * Meal Entity
  *
  * @property int $id
- * @property string|null $name
+ * @property string $name
+ * @property string|null $description
+ * @property float|null $price
+ * @property int $category_id
  *
- * @property \App\Model\Entity\MealType[] $mealTypes
+ * @property \App\Model\Entity\MealType[] $meal_types
  */
 class Meal extends Entity
 {
@@ -24,7 +26,10 @@ class Meal extends Entity
      * @var array
      */
     protected $_accessible = [
-        '*' => true,
-        'id' => false
+        'name' => true,
+        'description' => true,
+        'price' => true,
+        'category_id' => true,
+        'meal_types' => true
     ];
 }
