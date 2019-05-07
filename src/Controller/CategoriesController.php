@@ -19,7 +19,11 @@ class CategoriesController extends AppController
      */
     public function index()
     {
-        $categories = $this->paginate($this->Categories);
+        $categories = $this->paginate($this->Categories->find('all', [
+            'contain' => ['CategoryTypes']
+        ]), [
+            'limit' => 5
+        ]);
 
         $this->set(compact('categories'));
     }
@@ -34,7 +38,7 @@ class CategoriesController extends AppController
     public function view($id = null)
     {
         $category = $this->Categories->get($id, [
-            'contain' => ['Meals']
+            'contain' => ['CategoryTypes', 'Meals']
         ]);
 
         $this->set('category', $category);

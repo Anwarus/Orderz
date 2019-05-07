@@ -24,7 +24,16 @@
         <tbody>
             <?php foreach ($categories as $category): ?>
             <tr>
-                <td><?= h($category->name) ?></td>
+                <td>
+                    <div><?= h($category->name) ?></div>
+                    <table>
+                        <?php foreach ($category->category_types as $type): ?>
+                        <tr>
+                            <td><?= h($type->description) ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </table>
+                </td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $category->id]) ?>
                     <?= $this->Html->link(__('Edit'), ['action' => 'edit', $category->id]) ?>

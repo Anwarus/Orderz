@@ -28,6 +28,27 @@
         </tr>
     </table>
     <div class="related">
+        <h4><?= __('Related Types') ?></h4>
+        <?php if (!empty($category->category_types)): ?>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <th scope="col"><?= __('Description') ?></th>
+                    <th scope="col" class="actions"><?= __('Actions') ?></th>
+                </tr>
+                <?php foreach ($category->category_types as $type): ?>
+                    <tr>
+                        <td><?= h($type->description) ?></td>
+                        <td class="actions">
+                            <?= $this->Html->link(__('View'), ['controller' => 'CategoryTypes', 'action' => 'view', $type->id]) ?>
+                            <?= $this->Html->link(__('Edit'), ['controller' => 'CategoryTypes', 'action' => 'edit', $type->id]) ?>
+                            <?= $this->Form->postLink(__('Delete'), ['controller' => 'CategoryTypes', 'action' => 'delete', $type->id], ['confirm' => __('Are you sure you want to delete # {0}?', $type->id)]) ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+        <?php endif; ?>
+    </div>
+    <div class="related">
         <h4><?= __('Related Meals') ?></h4>
         <?php if (!empty($category->meals)): ?>
         <table cellpadding="0" cellspacing="0">

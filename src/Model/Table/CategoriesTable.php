@@ -1,12 +1,15 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Categories Model
  *
+ * @property |\Cake\ORM\Association\HasMany $CategoryTypes
  * @property \App\Model\Table\MealsTable|\Cake\ORM\Association\HasMany $Meals
  *
  * @method \App\Model\Entity\Category get($primaryKey, $options = [])
@@ -30,7 +33,16 @@ class CategoriesTable extends Table
     {
         parent::initialize($config);
 
-        $this->hasMany('Meals');
+        $this->setTable('categories');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
+
+        $this->hasMany('CategoryTypes', [
+            'foreignKey' => 'category_id'
+        ]);
+        $this->hasMany('Meals', [
+            'foreignKey' => 'category_id'
+        ]);
     }
 
     /**

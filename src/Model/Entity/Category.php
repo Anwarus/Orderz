@@ -10,6 +10,7 @@ use Cake\ORM\Entity;
  * @property string|null $name
  *
  * @property \App\Model\Entity\Meal[] $meals
+ * @property \App\Model\Entity\CategoryType[] $categoryTypes
  */
 class Category extends Entity
 {
