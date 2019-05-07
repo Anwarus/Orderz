@@ -16,7 +16,6 @@ class MealsController extends AppController
         parent::initialize();
 
         $this->loadComponent('Paginator');
-        $this->loadComponent('Flash'); // Include the FlashComponent
     }
 
     /**
