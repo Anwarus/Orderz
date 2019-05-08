@@ -26,13 +26,11 @@
             <tr>
                 <td>
                     <div><?= h($category->name) ?></div>
-                    <table>
+                    <div>
                         <?php foreach ($category->category_types as $type): ?>
-                        <tr>
-                            <td><?= h($type->description) ?></td>
-                        </tr>
+                            <span><?= h($type->description) ?></span>
                         <?php endforeach; ?>
-                    </table>
+                    </div>
                 </td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $category->id]) ?>
