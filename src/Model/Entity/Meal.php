@@ -11,6 +11,7 @@ use Cake\ORM\Entity;
  * @property string|null $description
  * @property float|null $price
  * @property int $category_id
+ * @property string $available
  *
  * @property \App\Model\Entity\MealType[] $meal_types
  */
@@ -30,6 +31,7 @@ class Meal extends Entity
         'description' => true,
         'price' => true,
         'category_id' => true,
+        'available' => true,
         'meal_types' => true
     ];
 }

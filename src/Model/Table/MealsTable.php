@@ -1,14 +1,17 @@
 <?php
-
 namespace App\Model\Table;
 
+use Cake\ORM\Query;
+use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
 /**
  * Meals Model
  *
+ * @property |\Cake\ORM\Association\BelongsTo $Categories
  * @property \App\Model\Table\MealTypesTable|\Cake\ORM\Association\HasMany $MealTypes
+ * @property |\Cake\ORM\Association\BelongsToMany $Orders
  *
  * @method \App\Model\Entity\Meal get($primaryKey, $options = [])
  * @method \App\Model\Entity\Meal newEntity($data = null, array $options = [])
@@ -31,7 +34,22 @@ class MealsTable extends Table
     {
         parent::initialize($config);
 
-        $this->hasMany('MealTypes');
+        $this->setTable('meals');
+        $this->setDisplayField('name');
+        $this->setPrimaryKey('id');
+
+        $this->belongsTo('Categories', [
+            'foreignKey' => 'category_id',
+            'joinType' => 'INNER'
+        ]);
+        $this->hasMany('MealTypes', [
+            'foreignKey' => 'meal_id'
+        ]);
+        $this->belongsToMany('Orders', [
+            'foreignKey' => 'meal_id',
+            'targetForeignKey' => 'order_id',
+            'joinTable' => 'meals_orders'
+        ]);
     }
 
     /**
@@ -43,12 +61,42 @@ class MealsTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->allowEmptyString('name', false)
-            ->maxLength('title', 255)
+            ->integer('id')
+            ->allowEmptyString('id', 'create');
 
-            ->allowEmptyString('price', false);
+        $validator
+            ->scalar('name')
+            ->maxLength('name', 255)
+            ->requirePresence('name', 'create')
+            ->allowEmptyString('name', false);
+
+        $validator
+            ->scalar('description')
+            ->maxLength('description', 255)
+            ->allowEmptyString('description');
+
+        $validator
+            ->decimal('price')
+            ->allowEmptyString('price');
+
+        $validator
+            ->scalar('available')
+            ->allowEmptyString('available', false);
 
         return $validator;
     }
 
+    /**
+     * Returns a rules checker object that will be used for validating
+     * application integrity.
+     *
+     * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
+     * @return \Cake\ORM\RulesChecker
+     */
+    public function buildRules(RulesChecker $rules)
+    {
+        $rules->add($rules->existsIn(['category_id'], 'Categories'));
+
+        return $rules;
+    }
 }
