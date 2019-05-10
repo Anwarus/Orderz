@@ -10,7 +10,9 @@ use Cake\ORM\Entity;
  * @property string|null $name
  *
  * @property \App\Model\Entity\Meal[] $meals
- * @property \App\Model\Entity\CategoryType[] $categoryTypes
+ * @property \App\Model\Entity\CategoryType[] $category_types
+ *
+ * @property int $meals_count
  */
 class Category extends Entity
 {
@@ -27,4 +29,9 @@ class Category extends Entity
         'name' => true,
         'meals' => true
     ];
+
+    protected function _getMealsCount()
+    {
+        return count($this->meals);
+    }
 }

@@ -38,10 +38,13 @@ class CategoriesTable extends Table
         $this->setPrimaryKey('id');
 
         $this->hasMany('CategoryTypes', [
-            'foreignKey' => 'category_id'
+            'foreignKey' => 'category_id',
+            'dependent' => 'true'
         ]);
+
         $this->hasMany('Meals', [
-            'foreignKey' => 'category_id'
+            'foreignKey' => 'category_id',
+            'dependant' => 'false'
         ]);
     }
 

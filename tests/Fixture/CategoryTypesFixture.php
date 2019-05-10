@@ -95,6 +95,11 @@ class CategoryTypesFixture extends TestFixture
                 'id' => 3,
                 'category_id' => 1,
                 'description' => 'big'
+            ],
+            [
+                'id' => 4,
+                'category_id' => 2,
+                'description' => 'custom'
             ]
         ];
 

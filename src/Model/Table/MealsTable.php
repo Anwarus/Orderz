@@ -9,9 +9,9 @@ use Cake\Validation\Validator;
 /**
  * Meals Model
  *
- * @property |\Cake\ORM\Association\BelongsTo $Categories
+ * @property \App\Model\Table\CategoriesTable|\Cake\ORM\Association\BelongsTo $Categories
  * @property \App\Model\Table\MealTypesTable|\Cake\ORM\Association\HasMany $MealTypes
- * @property |\Cake\ORM\Association\BelongsToMany $Orders
+ * @property \App\Model\Table\OrdersTable|\Cake\ORM\Association\BelongsToMany $Orders
  *
  * @method \App\Model\Entity\Meal get($primaryKey, $options = [])
  * @method \App\Model\Entity\Meal newEntity($data = null, array $options = [])
@@ -39,8 +39,7 @@ class MealsTable extends Table
         $this->setPrimaryKey('id');
 
         $this->belongsTo('Categories', [
-            'foreignKey' => 'category_id',
-            'joinType' => 'INNER'
+            'foreignKey' => 'category_id'
         ]);
         $this->hasMany('MealTypes', [
             'foreignKey' => 'meal_id'

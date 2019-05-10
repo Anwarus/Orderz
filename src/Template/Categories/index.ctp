@@ -18,6 +18,7 @@
         <thead>
             <tr>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
+                <th scope="col"><?= __('Assigned meals') ?></th>
                 <th scope="col" class="actions"><?= __('Actions') ?></th>
             </tr>
         </thead>
@@ -31,6 +32,9 @@
                             <span><?= h($type->description) ?></span>
                         <?php endforeach; ?>
                     </div>
+                </td>
+                <td>
+                    <?= h($category->meals_count) ?>
                 </td>
                 <td class="actions">
                     <?= $this->Html->link(__('View'), ['action' => 'view', $category->id]) ?>

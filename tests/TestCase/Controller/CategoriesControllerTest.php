@@ -1,6 +1,7 @@
 <?php
 namespace App\Test\TestCase\Controller;
 
+use Cake\ORM\TableRegistry;
 use App\Controller\CategoriesController;
 use Cake\TestSuite\IntegrationTestTrait;
 use Cake\TestSuite\TestCase;
@@ -29,7 +30,9 @@ class CategoriesControllerTest extends TestCase
      */
     public function testIndex()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->get('/categories');
+
+        $this->assertResponseOk();
     }
 
     /**
@@ -39,7 +42,11 @@ class CategoriesControllerTest extends TestCase
      */
     public function testView()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $id = 1;
+
+        $this->get("/categories/view/{$id}");
+
+        $this->assertResponseOk();
     }
 
     /**
@@ -49,7 +56,22 @@ class CategoriesControllerTest extends TestCase
      */
     public function testAdd()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->enableCsrfToken();
+
+        $data = [
+            'name' => 'Test category'
+        ];
+
+        $this->post('/categories/add', $data);
+
+        $this->assertRedirect();
+        $this->assertResponseSuccess();
+
+        $category = TableRegistry::get('Categories')
+            ->findByName($data->name)
+            ->first();
+
+        $this->assertEquals($category->name, $data->name);
     }
 
     /**
@@ -59,7 +81,19 @@ class CategoriesControllerTest extends TestCase
      */
     public function testEdit()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->enableCsrfToken();
+
+        $data = [
+            'id' => 1,
+            'name' => 'Test category [edited]'
+        ];
+
+        $this->put("/categories/edit/1", $data);
+
+        $categories = TableRegistry::getTableLocator()->get('Categories');
+        $category = $categories->get($data['id']);
+
+        $this->assertEquals($data['name'], $category->name);
     }
 
     /**
@@ -69,6 +103,15 @@ class CategoriesControllerTest extends TestCase
      */
     public function testDelete()
     {
-        $this->markTestIncomplete('Not implemented yet.');
+        $this->enableCsrfToken();
+
+        $id = 1;
+
+        $this->delete("/categories/delete/{$id}");
+
+        $categories = TableRegistry::getTableLocator()->get('Categories');
+        $isCategoryExist = $categories->exists(['id' => $id]);
+
+        $this->assertFalse($isCategoryExist);
     }
 }

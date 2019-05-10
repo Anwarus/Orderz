@@ -14,8 +14,6 @@ class MealsController extends AppController
     public function initialize()
     {
         parent::initialize();
-
-        $this->loadComponent('Paginator');
     }
 
     /**

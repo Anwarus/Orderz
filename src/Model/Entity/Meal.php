@@ -10,10 +10,12 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string|null $description
  * @property float|null $price
- * @property int $category_id
+ * @property int|null $category_id
  * @property string $available
  *
+ * @property \App\Model\Entity\Category $category
  * @property \App\Model\Entity\MealType[] $meal_types
+ * @property \App\Model\Entity\Order[] $orders
  */
 class Meal extends Entity
 {
@@ -32,6 +34,8 @@ class Meal extends Entity
         'price' => true,
         'category_id' => true,
         'available' => true,
-        'meal_types' => true
+        'category' => true,
+        'meal_types' => true,
+        'orders' => true
     ];
 }

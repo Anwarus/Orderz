@@ -24,7 +24,9 @@ class MealsTableTest extends TestCase
      */
     public $fixtures = [
         'app.Meals',
-        'app.MealTypes'
+        'app.Categories',
+        'app.MealTypes',
+        'app.Orders'
     ];
 
     /**
@@ -67,6 +69,16 @@ class MealsTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

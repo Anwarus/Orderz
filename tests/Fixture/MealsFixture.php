@@ -19,14 +19,14 @@ class MealsFixture extends TestFixture
         'name' => ['type' => 'string', 'length' => 255, 'null' => false, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'description' => ['type' => 'string', 'length' => 255, 'null' => true, 'default' => null, 'collate' => 'utf8_unicode_ci', 'comment' => '', 'precision' => null, 'fixed' => null],
         'price' => ['type' => 'decimal', 'length' => 19, 'precision' => 4, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => ''],
-        'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => false, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
+        'category_id' => ['type' => 'integer', 'length' => 11, 'unsigned' => false, 'null' => true, 'default' => null, 'comment' => '', 'precision' => null, 'autoIncrement' => null],
         'available' => ['type' => 'string', 'length' => null, 'null' => false, 'default' => 'b\'1\'', 'collate' => null, 'comment' => '', 'precision' => null, 'fixed' => null],
         '_indexes' => [
             'meals_category_key' => ['type' => 'index', 'columns' => ['category_id'], 'length' => []],
         ],
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id'], 'length' => []],
-            'meals_category_key' => ['type' => 'foreign', 'columns' => ['category_id'], 'references' => ['categories', 'id'], 'update' => 'restrict', 'delete' => 'restrict', 'length' => []],
+            'meals_category_key' => ['type' => 'foreign', 'columns' => ['category_id'], 'references' => ['categories', 'id'], 'update' => 'restrict', 'delete' => 'setNull', 'length' => []],
         ],
         '_options' => [
             'engine' => 'InnoDB',

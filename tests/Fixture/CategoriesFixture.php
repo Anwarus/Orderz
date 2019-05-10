@@ -61,6 +61,10 @@ class CategoriesFixture extends TestFixture
                 'id' => 1,
                 'name' => 'Pizzas'
             ],
+            [
+                'id' => 2,
+                'name' => 'Drinks'
+            ]
         ];
 
         parent::init();
