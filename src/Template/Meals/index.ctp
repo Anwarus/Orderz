@@ -17,7 +17,6 @@
     <table cellpadding="0" cellspacing="0">
         <thead>
             <tr>
-                <th scope="col"><?= $this->Paginator->sort('id') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('name') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('description') ?></th>
                 <th scope="col"><?= $this->Paginator->sort('price') ?></th>
@@ -28,7 +27,6 @@
         <tbody>
             <?php foreach ($meals as $meal): ?>
             <tr>
-                <td><?= $this->Number->format($meal->id) ?></td>
                 <td><?= h($meal->name) ?></td>
                 <td><?= h($meal->description) ?></td>
                 <td><?= $this->Number->format($meal->price) ?></td>
