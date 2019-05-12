@@ -18,8 +18,15 @@ use Cake\Core\Configure;
 use Cake\Core\Exception\MissingPluginException;
 use Cake\Error\Middleware\ErrorHandlerMiddleware;
 use Cake\Http\BaseApplication;
+use Cake\Routing\Router;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
+
+use Authentication\AuthenticationService;
+use Authentication\AuthenticationServiceProviderInterface;
+use Authentication\Middleware\AuthenticationMiddleware;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Application setup class.
@@ -27,8 +34,42 @@ use Cake\Routing\Middleware\RoutingMiddleware;
  * This defines the bootstrapping logic and middleware layers you
  * want to use in your application.
  */
-class Application extends BaseApplication
+class Application extends BaseApplication implements AuthenticationServiceProviderInterface
 {
+    /**
+    * Returns a service provider instance.
+    *
+    * @param \Psr\Http\Message\ServerRequestInterface $request Request
+    * @param \Psr\Http\Message\ResponseInterface $response Response
+    * @return \Authentication\AuthenticationServiceInterface
+    */
+    public function getAuthenticationService(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $service = new AuthenticationService();
+
+        $fields = [
+            'username' => 'username',
+            'password' => 'password'
+        ];
+
+        // Load identifiers
+        $service->loadIdentifier('Authentication.Password', [
+            'resolver' => [
+                'className' => 'Authentication.Orm',
+                'userModel' => 'Users'
+            ],
+            'fields' => $fields
+        ]);
+
+        // Load the authenticators
+        $service->loadAuthenticator('Authentication.Session');
+        $service->loadAuthenticator('Authentication.Form', [
+            'fields' => $fields
+        ]);
+
+        return $service;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -54,6 +95,9 @@ class Application extends BaseApplication
         if (Configure::read('debug')) {
             $this->addPlugin(\DebugKit\Plugin::class);
         }
+
+        //Load plugin responsible for authentication
+        $this->addPlugin('Authentication');
     }
 
     /**
@@ -65,6 +109,12 @@ class Application extends BaseApplication
     public function middleware($middlewareQueue)
     {
         $middlewareQueue
+            //Add authentication middleware
+            ->add(new AuthenticationMiddleware($this, [
+                'unauthenticatedRedirect' => Router::url('users:login'),
+                'queryParam' => 'redirect'
+            ]))
+
             // Catch any exceptions in the lower layers,
             // and make an error page/response
             ->add(new ErrorHandlerMiddleware(null, Configure::read('Error')))
